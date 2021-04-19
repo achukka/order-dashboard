@@ -1,6 +1,6 @@
 {
-    "short_name": "Order Dasbhoard",
-    "name": "A Dashboard to view, analyze orders",
+    "short_name": "URL Collection",
+    "name": "A Dashboard to view, search and add links",
     "icons": [    
     ],
     "start_url": ".",
