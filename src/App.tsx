@@ -1,16 +1,36 @@
 import * as React from "react";
-import Auth from "./Auth";
-import { firebaseConfig } from "./credentials";
+import {
+  FirebaseAuthProvider,
+  IfFirebaseAuthed,
+  IfFirebaseUnAuthed,
+} from "@react-firebase/auth";
 
-const NeverChangingDiv = () => {
-  return <div> This div does not answer to firebase</div>;
-};
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
+import Authenticated from "./Authenticated";
+import Anonymous from "./Anonymous";
+import { firebaseConfig } from "./credentials";
 
 const App = () => {
   return (
     <div>
-      <NeverChangingDiv />
-      <Auth config={firebaseConfig} />
+      <FirebaseAuthProvider {...firebaseConfig} firebase={firebase}>
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            background: "#ECEFF1",
+          }}
+        >
+          <IfFirebaseAuthed>
+            {() => <Authenticated config={firebaseConfig} />}
+          </IfFirebaseAuthed>
+          <IfFirebaseUnAuthed>{() => <Anonymous />}</IfFirebaseUnAuthed>
+        </div>
+      </FirebaseAuthProvider>
     </div>
   );
 };

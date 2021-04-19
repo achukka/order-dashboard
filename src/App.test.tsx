@@ -3,8 +3,14 @@ import { render, screen } from "@testing-library/react";
 import App from "./App";
 import { link } from "fs/promises";
 
-test("Renders Never Changing Div", () => {
+test("Renders Login Anonymously Button", () => {
   render(<App />);
-  const linkElement = screen.getByText(/This div does not answer to firebase/i);
+  const linkElement = screen.getByText(/Login Anonymously/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+test("Renders Login With Google Button", () => {
+  render(<App />);
+  const linkElement = screen.getByText(/Login With Google/i);
   expect(linkElement).toBeInTheDocument();
 });
