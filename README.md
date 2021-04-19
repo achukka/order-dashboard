@@ -1,6 +1,6 @@
 # order-dashboard
 
-[![CI](https://github.com/achukka/order-dashboard/actions/workflows/blank.yml/badge.svg?branch=main)](https://github.com/achukka/order-dashboard/actions/workflows/blank.yml)
+[![Node.js CI](https://github.com/achukka/order-dashboard/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/achukka/order-dashboard/actions/workflows/node.js.yml)
 
 A Dashboard to organize user orders
 
