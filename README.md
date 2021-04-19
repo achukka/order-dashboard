@@ -1,5 +1,7 @@
 # order-dashboard
 
+[![CI](https://github.com/achukka/order-dashboard/actions/workflows/blank.yml/badge.svg?branch=main)](https://github.com/achukka/order-dashboard/actions/workflows/blank.yml)
+
 A Dashboard to organize user orders
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
