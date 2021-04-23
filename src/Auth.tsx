@@ -1,30 +1,31 @@
-import React from "react";
+import * as React from "react";
 import {
   FirebaseAuthProvider,
-  FirebaseAuthConsumer,
+  IfFirebaseAuthed,
+  IfFirebaseUnAuthed,
 } from "@react-firebase/auth";
+
 import firebase from "firebase/app";
 import "firebase/auth";
-import Profile from "./Autheticated";
+import Authenticated from "./Autheticated";
 import Anonymous from "./Anonymous";
 
 const Auth = (props: any) => {
   return (
     <div>
       <FirebaseAuthProvider {...props.config} firebase={firebase}>
-        <div>
-          Hello <div>From Firebase Auth Provider Child</div>
-          <FirebaseAuthConsumer>
-            {({ isSignedIn }) => {
-              if (isSignedIn === true) {
-                return <Profile />;
-              } else {
-                return <Anonymous />;
-              }
-            }}
-          </FirebaseAuthConsumer>
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            background: "#ECEFF1",
+          }}
+        >
+          <IfFirebaseAuthed>{() => <Authenticated />}</IfFirebaseAuthed>
+          <IfFirebaseUnAuthed>{() => <Anonymous />}</IfFirebaseUnAuthed>
         </div>
-        <div>Another div</div>
       </FirebaseAuthProvider>
     </div>
   );

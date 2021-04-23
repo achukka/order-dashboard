@@ -1,4 +1,5 @@
-import React from "react";
+import * as React from "react";
+import { render } from "react-dom";
 import Auth from "./Auth";
 import { firebaseConfig } from "./credentials";
 
@@ -15,4 +16,4 @@ const App = () => {
   );
 };
 
-export default App;
+render(<App />, document.getElementById("root"));
