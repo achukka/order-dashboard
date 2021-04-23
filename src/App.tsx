@@ -1,5 +1,4 @@
 import * as React from "react";
-import { render } from "react-dom";
 import Auth from "./Auth";
 import { firebaseConfig } from "./credentials";
 
@@ -16,4 +15,5 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById("root"));
+export default App;
+// TODO: https://github.com/rakannimer/react-firebase/blob/3264b0a62509c5f321713b10615ba2ce3ee50036/modules/tutorial-bookmarking-app/src/index.tsx
