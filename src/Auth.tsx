@@ -7,7 +7,7 @@ import {
 
 import firebase from "firebase/app";
 import "firebase/auth";
-import Authenticated from "./Autheticated";
+import Authenticated from "./Authenticated";
 import Anonymous from "./Anonymous";
 
 const Auth = (props: any) => {
