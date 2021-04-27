@@ -16,4 +16,3 @@ const App = () => {
 };
 
 export default App;
-// TODO: https://github.com/rakannimer/react-firebase/blob/3264b0a62509c5f321713b10615ba2ce3ee50036/modules/tutorial-bookmarking-app/src/index.tsx
