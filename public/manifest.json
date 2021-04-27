@@ -1,10 +1,10 @@
 {
-  "short_name": "Order Dasbhoard",
-  "name": "A Dashboard to view, analyze orders",
-  "icons": [    
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
-}
+    "short_name": "Order Dasbhoard",
+    "name": "A Dashboard to view, analyze orders",
+    "icons": [    
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+  }

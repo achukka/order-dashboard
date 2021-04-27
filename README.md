@@ -1,6 +1,6 @@
 # order-dashboard
 
-[![CI](https://github.com/achukka/order-dashboard/actions/workflows/blank.yml/badge.svg?branch=main)](https://github.com/achukka/order-dashboard/actions/workflows/blank.yml)
+[![Node.js CI](https://github.com/achukka/order-dashboard/actions/workflows/node.js.yml/badge.svg)](https://github.com/achukka/order-dashboard/actions/workflows/node.js.yml)
 
 A Dashboard to organize user orders
 
@@ -22,7 +22,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Running
 
-### `npm start`
+### `npm run`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

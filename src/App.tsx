@@ -1,11 +1,18 @@
-import React from 'react';
+import * as React from "react";
+import Auth from "./Auth";
+import { firebaseConfig } from "./credentials";
 
-const user = "Po";
+const NeverChangingDiv = () => {
+  return <div> This div does not answer to firebase</div>;
+};
 
 const App = () => {
   return (
-    <div>Hello {user}</div>
+    <div>
+      <NeverChangingDiv />
+      <Auth config={firebaseConfig} />
+    </div>
   );
-}
+};
 
 export default App;
