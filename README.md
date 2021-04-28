@@ -1,8 +1,8 @@
-# order-dashboard
+# url-collection
 
-[![Node.js CI](https://github.com/achukka/order-dashboard/actions/workflows/node.js.yml/badge.svg)](https://github.com/achukka/order-dashboard/actions/workflows/node.js.yml)
+[![Node.js CI](https://github.com/achukka/url-collection/actions/workflows/node.js.yml/badge.svg)](https://github.com/achukka/url-collection/actions/workflows/node.js.yml)
 
-A Dashboard to organize user orders
+A Dashboard to view, search and add links
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
