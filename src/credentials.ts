@@ -6,4 +6,5 @@ export const firebaseConfig = {
   messagingSenderId: "557451488503",
   appId: "1:557451488503:web:e6e51bf41955bf5894b7f2",
   measurementId: "G-26V1SX2GQB",
+  databaseURL: "https://order-dashboard-89c14-default-rtdb.firebaseio.com/",
 };

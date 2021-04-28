@@ -1,16 +1,26 @@
 import * as React from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/database";
 import { Button, MenuItem, TextField, Fab } from "@material-ui/core";
 import {
   getButtonStyleProps,
   getCenterChildrenStyle,
   getFormStyleProps,
   getMenuListStyleProps,
-  HeaderProps,
   RowWithRightAlignedContext as RowWithRightAlignedContent,
-} from "./Common";
+} from "./Styles";
 import Search from "./Search";
+import { DatabaseLink, HeaderProps } from "./Types";
+import {
+  FirebaseDatabaseMutation,
+  FirebaseDatabaseNode,
+  FirebaseDatabaseProvider,
+} from "@react-firebase/database";
+import { isNullOrUndefined } from "./Common";
+
+import get from "lodash.get";
+import set from "lodash.set";
 
 const Header = ({
   renderLogout = () => null,
@@ -43,86 +53,99 @@ const Header = ({
   );
 };
 
+const MenuItemList = (values: DatabaseLink[]) => {
+  return Object.entries(values).map(([k, v]) => (
+    <MenuItem key={k}>{v.link_description}</MenuItem>
+  ));
+};
+
 class Authenticated extends React.Component<
-  {},
-  { linkText: string; linkMetadata: string }
+  { config: {} },
+  { linkText: string; linkMetadata: string; config: {} }
 > {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      linkText: "",
-      linkMetadata: "",
-    };
-    this.linkTextChanged = this.linkTextChanged.bind(this);
-    this.linkMetadataChanged = this.linkMetadataChanged.bind(this);
-  }
-
-  linkTextChanged(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({
-      linkText: e.target.value,
-    });
-  }
-
-  linkMetadataChanged(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({
-      linkMetadata: e.target.value,
-    });
-  }
-
+  newLinkTextFieldRef = React.createRef();
+  newLinkMetaTextFieldRef = React.createRef();
   render() {
-    const { linkText, linkMetadata } = this.state;
     return (
-      <div style={{ width: "80%" }}>
-        <div style={{ width: "100%" }}>
-          <Header
-            renderLogout={() => (
-              <Button
-                {...getButtonStyleProps("contained")}
-                onClick={async () => {
-                  await firebase.app().auth().signOut();
-                }}
-              >
-                SignOut
-              </Button>
-            )}
-            renderSearch={() => <Search />}
-          />
-        </div>
-        <RowWithRightAlignedContent>
-          <div {...getMenuListStyleProps()}>
-            <MenuItem>Item 1</MenuItem>
-            <MenuItem>Item 2</MenuItem>
-            <MenuItem>Item 3</MenuItem>
+      <FirebaseDatabaseProvider {...this.props.config} firebase={firebase}>
+        <div style={{ width: "80%" }}>
+          <div style={{ width: "100%" }}>
+            <Header
+              renderLogout={() => (
+                <Button
+                  {...getButtonStyleProps("contained")}
+                  onClick={async () => {
+                    await firebase.app().auth().signOut();
+                  }}
+                >
+                  SignOut
+                </Button>
+              )}
+              renderSearch={() => <Search />}
+            />
           </div>
-        </RowWithRightAlignedContent>
-        <RowWithRightAlignedContent>
-          <form
-            {...getFormStyleProps()}
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log(linkText, linkMetadata);
-            }}
-          >
-            <div style={{ paddingTop: 20, paddingBottom: 20 }}>
-              <div>
-                <TextField
-                  label="New Link URL"
-                  onChange={this.linkTextChanged}
-                />
-              </div>
-              <div>
-                <TextField
-                  label="New Link Metadata"
-                  onChange={this.linkMetadataChanged}
-                />
-              </div>
+          <RowWithRightAlignedContent>
+            <div {...getMenuListStyleProps()}>
+              <FirebaseDatabaseNode path="user_bookmarks/">
+                {({ value }) => {
+                  if (isNullOrUndefined(value)) {
+                    return null;
+                  }
+                  return <div>{MenuItemList(value)}</div>;
+                }}
+              </FirebaseDatabaseNode>
             </div>
-            <Fab {...getButtonStyleProps("round")} type="submit">
-              +
-            </Fab>
-          </form>
-        </RowWithRightAlignedContent>
-      </div>
+          </RowWithRightAlignedContent>
+          <RowWithRightAlignedContent>
+            <FirebaseDatabaseMutation type="push" path="user_bookmarks/">
+              {({ runMutation }) => (
+                <form
+                  {...getFormStyleProps()}
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const newLink = get(
+                      this.newLinkTextFieldRef,
+                      "current.value",
+                      ""
+                    );
+                    const newMeta = get(
+                      this.newLinkMetaTextFieldRef,
+                      "current.value",
+                      ""
+                    );
+                    await runMutation({
+                      link_url: newLink,
+                      link_description: newMeta,
+                      created_at: firebase.database.ServerValue.TIMESTAMP,
+                      updated_at: firebase.database.ServerValue.TIMESTAMP,
+                    });
+                    set(this.newLinkTextFieldRef, "current.value", "");
+                    set(this.newLinkMetaTextFieldRef, "current.value", "");
+                  }}
+                >
+                  <div style={{ paddingTop: 20, paddingBottom: 20 }}>
+                    <div>
+                      <TextField
+                        label="New Link URL"
+                        inputRef={this.newLinkTextFieldRef}
+                      />
+                    </div>
+                    <div>
+                      <TextField
+                        label="New Link Metadata"
+                        inputRef={this.newLinkMetaTextFieldRef}
+                      />
+                    </div>
+                  </div>
+                  <Fab {...getButtonStyleProps("round")} type="submit">
+                    +
+                  </Fab>
+                </form>
+              )}
+            </FirebaseDatabaseMutation>
+          </RowWithRightAlignedContent>
+        </div>
+      </FirebaseDatabaseProvider>
     );
   }
 }

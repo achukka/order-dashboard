@@ -4,13 +4,15 @@ import {
   IconButton,
   Typography,
   Input,
-  MenuItem,
+  Card,
+  CardContent,
 } from "@material-ui/core";
 import Close from "@material-ui/icons/Close";
 
 import Downshift from "downshift";
 import { matchSorter } from "match-sorter";
-import { DisplayItem, DisplayMenuItemsProps } from "./Common";
+import { CardProps } from "./Types";
+import { AutoCompleteLink } from "./Types";
 
 const ClearInput = (clearSelection: any) => {
   return (
@@ -29,17 +31,17 @@ const ClearInput = (clearSelection: any) => {
   );
 };
 
-const ShowMenuItem = (
+const ShowCard = (
   getItemProps: any,
-  item: DisplayItem,
+  item: AutoCompleteLink,
   index: number,
   highlightedIndex: number | null,
-  selectedItem: DisplayItem
+  selectedItem: AutoCompleteLink
 ) => {
   return (
-    <MenuItem
+    <Card
       {...getItemProps({
-        key: item.value,
+        key: item.link_url,
         index,
         item,
         style: {
@@ -48,12 +50,15 @@ const ShowMenuItem = (
         },
       })}
     >
-      {item.label}
-    </MenuItem>
+      <CardContent>
+        <Typography variant="h6">{item.link_description}</Typography>
+        <Typography component="p">{item.link_url}</Typography>
+      </CardContent>
+    </Card>
   );
 };
 
-const DisplayMenuItems = (props: DisplayMenuItemsProps) => {
+const ShowCards = (props: CardProps) => {
   const {
     getMenuProps,
     getItemProps,
@@ -66,16 +71,10 @@ const DisplayMenuItems = (props: DisplayMenuItemsProps) => {
   return (
     <div {...getMenuProps()}>
       {isOpen
-        ? matchSorter(items, inputValue ?? "", {
-            keys: ["value"],
+        ? matchSorter(items, `${inputValue}`, {
+            keys: ["link_description"],
           }).map((item, index) =>
-            ShowMenuItem(
-              getItemProps,
-              item,
-              index,
-              highlightedIndex,
-              selectedItem
-            )
+            ShowCard(getItemProps, item, index, highlightedIndex, selectedItem)
           )
         : null}
     </div>
@@ -83,12 +82,12 @@ const DisplayMenuItems = (props: DisplayMenuItemsProps) => {
 };
 
 const AutoComplete = ({
-  items = [] as { label: string; value: string }[],
+  items = [] as AutoCompleteLink[],
   onSelect = (selection: {}) => {},
 }) => {
   return (
     <Downshift
-      itemToString={(item) => (item ? item.label : "")}
+      itemToString={(item) => (item ? item.link_description : "")}
       onChange={(selection) => {
         onSelect(selection);
       }}
@@ -105,7 +104,7 @@ const AutoComplete = ({
         clearSelection,
       }) => {
         return (
-          <div style={{ width: "100%" }}>
+          <div style={{ width: "100%", height: 50 }}>
             <Typography {...getLabelProps()}>Search</Typography>
             <Input
               fullWidth
@@ -114,7 +113,7 @@ const AutoComplete = ({
               endAdornment={ClearInput(clearSelection)}
               {...getInputProps()}
             ></Input>
-            <DisplayMenuItems
+            <ShowCards
               getMenuProps={getMenuProps}
               getItemProps={getItemProps}
               isOpen={isOpen}
