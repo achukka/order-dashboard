@@ -1,5 +1,9 @@
 {
   "projects": {
+<<<<<<< HEAD
     "default": "url-collection-fc917"
+=======
+    "default": "e-key-135123"
+>>>>>>> a56db8b... Host: App in firebase
   }
 }
