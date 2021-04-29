@@ -1,10 +1,10 @@
 export const firebaseConfig = {
-  apiKey: "AIzaSyB9ZwtQW5g9frRMj8w5qxkoao28m-RKs-0",
-  authDomain: "order-dashboard-89c14.firebaseapp.com",
-  projectId: "order-dashboard-89c14",
-  storageBucket: "order-dashboard-89c14.appspot.com",
-  messagingSenderId: "557451488503",
-  appId: "1:557451488503:web:e6e51bf41955bf5894b7f2",
-  measurementId: "G-26V1SX2GQB",
-  databaseURL: "https://order-dashboard-89c14-default-rtdb.firebaseio.com/",
+  apiKey: "AIzaSyCYbznEibceBNuDSFOfEJYZUCTlSYjdOvA",
+  authDomain: "url-collection-fc917.firebaseapp.com",
+  databaseURL: "https://url-collection-fc917-default-rtdb.firebaseio.com",
+  projectId: "url-collection-fc917",
+  storageBucket: "url-collection-fc917.appspot.com",
+  messagingSenderId: "252025074991",
+  appId: "1:252025074991:web:9b0505e2a386c1e8d45dda",
+  measurementId: "G-2J71H3X4XC",
 };
